@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Producto 1",
+    "description": "Desc prod1",
+    "price": 10.2,
+    "thumbnail": "www.image.com",
+    "code": "qwerty",
+    "stock": 100
+  },
+  {
+    "id": 1,
+    "title": "Producto 1",
+    "description": "Desc prod1",
+    "price": 10.2,
+    "thumbnail": "www.image.com",
+    "code": "qwerty",
+    "stock": 100
+  }
+]

@@ -1,0 +1,1 @@
+Primer contenido para escribir en un archivo con promesas

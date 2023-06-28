@@ -1,0 +1,34 @@
+[
+  {
+    id: 1,
+    participantes: [ 1 ],
+    nombre: 'Nombre de evento 1',
+    lugar: 'CDMX',
+    precio: 1.45,
+    capacidad: 50,
+    fecha: 2023-06-12T23:56:04.244Z
+  },
+  {
+    id: 2,
+    participantes: [ 1 ],
+    nombre: 'Evento 2',
+    lugar: 'Buenos Aires',
+    precio: 1.5499999999999998,
+    capacidad: 20,
+    fecha: 2023-06-12T23:56:04.246Z
+  },
+  {
+    nombre: 'Evento 2',
+    precio: 1.5499999999999998,
+    capacidad: 20,
+    id: 3,
+    participantes: [],
+    lugar: 'Lima',
+    fecha: 2023-12-31T00:00:00.000Z
+  }
+]
+
+
+// 0 =====> 1
+// 1 =====> 2
+// 2 =====> 3
