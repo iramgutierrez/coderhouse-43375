@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "title": "Coca cola",
+    "thumbnails": [
+      "http://www.image.com/coca-cola-1",
+      "http://www.image.com/coca-cola-2",
+      "http://www.image.com/coca-cola-3"
+    ],
+    "status": true
+  }
+]
