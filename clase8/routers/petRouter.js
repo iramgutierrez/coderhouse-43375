@@ -21,7 +21,7 @@ petRouter.get('/', async (req, res) => {
 
   const petsFiltered = pets.filter(pet => pet.gender === gender)
 
-  return res.send(petsFiltered)
+  return res.json(petsFiltered)
 })
 
 petRouter.get('/:petId', async (req, res) => {
@@ -39,11 +39,11 @@ petRouter.get('/:petId', async (req, res) => {
 })
 
 petRouter.post('/', uploader.single('file'), (req, res) => {
-  console.log(req.file)
+  console.log({ file: req.file })
   const pet = req.body
 
   pet.id = pets.length + 1
-  pet.path = req.file.originalname
+  pet.path = req.file && req.file.originalname
 
   pets.push(pet)
 
