@@ -1,0 +1,19 @@
+<table id="productos">
+  <tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Precio</th>
+  </tr>
+  {{#each products}}
+    <tr>
+      <td>{{this.id}}</td>
+      <td>{{this.name}}</td>
+      <td>{{this.price}}</td>
+    </tr>
+  {{/each}}
+  
+</table>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/products.js"></script>

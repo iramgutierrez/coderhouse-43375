@@ -16,5 +16,23 @@
         "quantity": 20
       }
     ]
+  },
+  {
+    "id": 2,
+    "name": "Carrito de Iram",
+    "products": [
+      {
+        "productId": 1,
+        "quantity": 25
+      },
+      {
+        "productId": 2,
+        "quantity": 5
+      },
+      {
+        "productId": 5,
+        "quantity": 20
+      }
+    ]
   }
 ]

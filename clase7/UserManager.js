@@ -31,6 +31,8 @@ class UserManager {
         user.id = users.length + 1
         users.push(user)
 
+        this.socketServer.emit('nuevoUsuario', user)
+
         return fs.promises.writeFile(this.path, JSON.stringify(users, null, 2))
       })
       .catch(e => {
