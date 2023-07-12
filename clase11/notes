@@ -1,0 +1,6 @@
+https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.3/qs.min.js
+
+const { username } = Qs.parse(window.location.search, {
+  ignoreQueryPrefix: true
+})
+
