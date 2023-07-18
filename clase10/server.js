@@ -21,28 +21,6 @@ const httpServer = app.listen(PORT, () => console.log(`Servidor corriendo en el 
 
 const socketServer = new Server(httpServer)
 
-const manager = new UserManager('./users.json', socketServer)
-
-socketServer.on('connection', (socket) => {
-  console.log('Nuevo cliente conectado!')
-
-  socket.on('mi_mensaje', (data) => {
-    console.log(data)
-  })
-
-  setTimeout(() => {
-    socket.emit('mensaje_backend', 'Mensaje enviado desde el backend')
-  }, 2000)
-
-})
-
-app.get('/', (req, res) => {
-  return res.json({
-    status: 'running',
-    date: new Date()
-  })
-})
-
 const products = [
   {
     id: 1,
@@ -66,6 +44,44 @@ const products = [
   },
 ]
 
+socketServer.on('connection', (socket) => {
+  console.log('Nuevo cliente conectado!')
+
+  socket.on('mi_mensaje', (data) => {
+    console.log(data)
+  })
+
+  setTimeout(() => {
+    socket.emit('mensaje_backend', 'Mensaje enviado desde el backend')
+  }, 2000)
+
+  socket.on('enviarNuevoProducto', (data) => {
+    console.log(data)
+
+    const product = JSON.parse(data)
+
+    product.id = products.length + 1
+
+    console.log(product)
+
+    products.push(product)
+
+    socketServer.emit('nuevoProducto', JSON.stringify(product))
+  })
+
+  socket.on('borrarProducto', id => {
+    console.log(id, 'borrar producto')
+  })
+
+})
+
+app.get('/', (req, res) => {
+  return res.json({
+    status: 'running',
+    date: new Date()
+  })
+})
+
 app.get('/websockets', (req, res) => {
   return res.render('websockets')
 })
@@ -76,6 +92,17 @@ app.get('/products', (req, res) => {
     products
   }
   return res.render('products', params)
+})
+
+app.post('/products/delete', (req, res) => {
+  const data = req.body
+  const productId = data.id
+
+  const productIndex = products.findIndex(product => product.id === productId)
+
+  products.splice(productIndex, 1)
+
+  return res.redirect('/products')
 })
 
 app.get('/api/products', (req, res) => {
@@ -90,5 +117,18 @@ app.post('/api/products', (req, res) => {
 
   socketServer.emit('nuevoProducto', JSON.stringify(product))
 
-  return res.status(201).json(product)
+  return res.redirect('/products')
+  //return res.status(201).json(product)
+})
+
+app.delete('/api/products/:id', (req, res) => {
+  const productId = Number(req.params.id)
+
+  const productIndex = products.findIndex(product => product.id === productId)
+
+  products.splice(productIndex, 1)
+
+  console.log('producto borrado')
+
+  return res.status(204).json({})
 })
