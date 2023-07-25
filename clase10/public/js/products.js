@@ -15,7 +15,12 @@ formButton.addEventListener('submit', (event) => {
 
   console.log({ name, price })
 
-  socket.emit('enviarNuevoProducto', JSON.stringify({ name, price }))
+  // socket.emit('enviarNuevoProducto', JSON.stringify({ name, price }))
+
+  fetch(`/api/products`, {
+    method: 'POST',
+    body: { name, price }
+  })
 })
 
 const deleteProduct = (id) => {

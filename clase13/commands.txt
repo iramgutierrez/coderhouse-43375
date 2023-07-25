@@ -1,0 +1,74 @@
+show dbs
+
+use 43375-clase13
+
+show collections
+
+db.users.insertOne({ "name": "Iram", "lastname": "Gutierrez", "country": "MX" })
+
+var users = [{ "name": "yashar", "lastname": "ghafarinejad", "country": "AR" }, { "name": "Fatima", "lastname": "Melgarejo", "country": "AR" }, { "name": "Santiago", "lastname": "Ferrer", "country": "AR"} ]
+
+users
+
+db.users.insertMany(users)
+
+db.users.findOne()
+
+db.users.find()
+
+db.users.findOne({ country: "AR", lastname: "Ferrer" })
+
+db.pets.find({ breed: "vpi" })
+
+const query = { 
+  breed: { 
+    "$ne": "vpi" 
+  } 
+}
+
+
+db.pets.find({ breed: { "$ne": "vpi" } })
+
+db.pets.find(query)
+
+db.pets.find({ breed: { "$exists": true } })
+
+db.pets.find({ breed: { "$exists": false } })
+
+db.pets.countDocuments()
+
+db.users.find({ "$or": [ { "name": "Iram"}, { "lastname": "Melgarejo"} ]  } )
+
+db.pets.find({ "age": { "$gt": 11  } })
+
+db.pets.find({ "age": { "$gte": 11  } })
+
+db.pets.find({ age: { "$lt": 11 } })
+
+db.pets.find({ age: { "$lte": 11 } })
+
+db.pets.find({ name: { $in: [ "Merida", "Vilma" ]} })
+
+db.pets.find({ name: { $nin: [ "Merida", "Vilma" ]} })
+
+db.users.find({country: "AR"}, {name: 1, lastname: 1 })
+
+db.users.find().sort({ country: -1, name: 1  })
+
+db.users.find().skip(2).limit(2)
+
+db.users.updateMany({}, { $set: { school: "CODERHOUSE" }})
+
+db.users.updateOne( { country: { "$eq": "MX" } }, { $set: { role: "teacher" } } )
+
+db.users.updateMany( { country: { "$ne": "MX" } }, { $set: { role: "student" } } )
+
+db.pets.deleteMany({ breed: { $exists: false }})
+
+db.pets.deleteMany({})
+
+
+
+
+
+
