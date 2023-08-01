@@ -33,6 +33,10 @@ socket.on('message', messageString => {
     <div>${message.user}: ${message.message}</div>`
 })
 
+socket.on('newUser', user => {
+  console.log({ user })
+})
+
 socket.on('messages', messagesString => {
   const messages = JSON.parse(messagesString)
   messagesContainer.innerHTML = ''

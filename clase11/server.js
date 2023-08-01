@@ -1,4 +1,4 @@
-const express = require('express')
+/*const express = require('express')
 const handlebars = require('express-handlebars')
 
 const viewsRouterFn = require('./routers/viewsRouter')
@@ -20,38 +20,12 @@ const PORT = 8080
 
 const httpServer = app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`))
 
-const io = socketServer(httpServer) // socketServer
+const io = socketServer(httpServer) // socketServer */
 
-const users = []
+const viewsRouter = require('./routers/viewsRouter')
 
-const messages = []
-io.on('connection', socket => {
-  console.log('Nuevo cliente conectado', io.sockets)
+const { app } = require('./utils/app')
 
-  socket.on('joinChat', username => {
-    users.push({
-      name: username,
-      socketId: socket.id
-    })
-
-    socket.broadcast.emit('notification', `${username} se ha unido al chat`)
-
-    socket.emit('notification', `Bienvenid@ ${username}`)
-    socket.emit('messages', JSON.stringify(messages))
-  })
-
-  socket.on('newMessage', message => {
-    const user = users.find(user => user.socketId === socket.id)
-
-    const newMessage = {
-      message,
-      user: user.name
-    }
-    messages.push(newMessage)
-
-    io.emit('message', JSON.stringify(newMessage))
-  }) 
-})
 
 app.get('/healthcheck', (req, res) => {
   return res.json({
@@ -60,6 +34,6 @@ app.get('/healthcheck', (req, res) => {
   })
 })
 
-const viewsRouter = viewsRouterFn(io)
+// const viewsRouter = viewsRouterFn(io)
 
 app.use('/', viewsRouter)

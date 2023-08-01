@@ -1,6 +1,8 @@
 const { Router } = require('express')
 
-const viewsRouterFn = (io) => {
+const { io } = require('../utils/app')
+
+// const viewsRouterFn = (io) => {
   const viewsRouter = new Router()
 
   const usernames = []
@@ -15,8 +17,8 @@ const viewsRouterFn = (io) => {
     const username = user.name
 
     usernames.push(username)
-
-    // io.emit('newUser', username)
+    console.log({ username })
+    io.emit('newUser', username)
 
     return res.redirect(`/chat?username=${username}`)
   })
@@ -25,7 +27,9 @@ const viewsRouterFn = (io) => {
     return res.render('index')
   })
 
-  return viewsRouter
-}
+  module.exports = viewsRouter
 
-module.exports = viewsRouterFn
+  // return viewsRouter
+// }
+
+// module.exports = viewsRouterFn
