@@ -1,0 +1,28 @@
+Estudiantes
+
+
+<h4>Página: {{page}} de {{totalPages}}</h4>
+<table id="productos">
+  <tr>
+    <th>Id</th>
+    <th>Nombre del estudiante</th>
+    <th>Email</th>
+  </tr>
+  {{#each docs}}
+    <tr>
+      
+      <td>{{this.userId}}</td>
+      <td>{{this.username}}</td>
+      <td>{{this.email}}</td>
+    </tr>
+  {{/each}}
+  
+</table>
+
+{{#if hasPrevPage }}
+  <a href="/students?page={{prevPage}}">Página previa</a>
+{{/if}}
+
+{{#if hasNextPage }}
+  <a href="/students?page={{nextPage}}">Página siguiente</a>
+{{/if}} 
