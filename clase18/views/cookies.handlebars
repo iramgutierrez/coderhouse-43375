@@ -1,0 +1,16 @@
+<form action="/cookiesForm" method="POST">
+  User: <input type="text" name="user" id="user">
+  Email: <input type="text" name="email" id="email">
+
+  <button type="submit">Enviar cookies</button>
+  <button id="getCookies">Obtener cookies</button>
+
+
+  <p id="cookies"></p>
+</form>
+
+<script>
+  fetch('/getCookie')
+    .then( response => response.json())
+    .then(data => console.log(data))
+</script>
