@@ -58,16 +58,17 @@ app.post('/cookiesForm', (req, res) => {
 })
 
 app.get('/session', (req, res) => {
-  return res.json(req.session)
+  //return res.json(req.session)
 
   if (!req.session.counter) {
     req.session.counter = 1
+    req.session.name = req.query.name
 
-    return res.json(`Bienvenido`)
+    return res.json(`Bienvenido ${req.session.name}`)
   } else {
     req.session.counter++
 
-    return res.json(`Has visitado la página ${req.session.counter} veces`)
+    return res.json(`${req.session.name} has visitado la página ${req.session.counter} veces`)
   }
 })
 
