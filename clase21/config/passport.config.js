@@ -1,34 +1,18 @@
 const passport = require('passport')
 const GitHubStrategy = require('passport-github2')
+const gitHubStrategy = require('../strategies/githubStrategy')
+const loginLocalStrategy = require('../strategies/loginLocalStrategy')
+const registerLocalStrategy = require('../strategies/registerLocalStrategy')
 
 const userModel = require('../models/userModel')
 
+const { generateToken } = require('../utils/jwt')
+
+
 const initializePassport = () => {
-  passport.use('github', new GitHubStrategy({
-    clientID: 'Iv1.af2eb976a7d59971',
-    clientSecret: 'bbecab344174b6c6de466a5014aa0efd7f115db5',
-    callbackURL: 'http://localhost:8080/api/sessions/github-callback'
-  }, async (accessToken, refreshToken, profile, done) => {
-    // console.log({ accessToken, refreshToken, profile })
-
-    try {
-      const user = await userModel.findOne({ username: profile._json.login })
-  
-      if (user) {
-        console.log('Usuario ya existe')
-        return done(null, user)
-      }
-      
-      const newUser = await userModel.create({
-        username: profile._json.login,
-        name: profile._json.name
-      })
-
-      return done(null, newUser)
-    } catch (e) {
-      return done(e)
-    }
-  }))
+  passport.use('github', gitHubStrategy)
+  passport.use('login', loginLocalStrategy)
+  passport.use('register', registerLocalStrategy)
 
   passport.serializeUser((user, done) => {
     console.log({ user })
@@ -38,7 +22,11 @@ const initializePassport = () => {
 
   passport.deserializeUser(async (id, done) => {
     console.log('deserializeUser')
-    const user = await userModel.findOne({ _id: id})
+    let user = await userModel.findOne({ _id: id})
+    const token = generateToken(user)
+    user = user.toObject()
+    user.access_token = token
+    console.log({ user })
     done(null, user)
   })
 

@@ -38,12 +38,12 @@ const initializePassport = () => {
 
         if (!user) {
           console.log('El usuario no existe en el sistema')
-          return done(null, false)
+          return done(null, false, { message: 'El usuario no existe en el sistema' })
         }
 
         if (!isValidPassword(password, user.password)) {
-          console.log('Datos incorrectos')
-          return done(null, false)
+          // console.log('Datos incorrectos')
+          return done(null, false, { message: 'Datos incorrectos' })
         }
 
         user = user.toObject()

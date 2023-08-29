@@ -8,7 +8,7 @@ sessionRouter.get('/github', passport.authenticate('github', { scope: ['user:ema
 })
 
 sessionRouter.get('/github-callback', passport.authenticate('github', { failureRedirect: '/login'}), async (req, res) => {
-  return res.redirect('/profile')
+  return res.json(req.user)
 })
 
 module.exports = sessionRouter

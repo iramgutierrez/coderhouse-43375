@@ -50,7 +50,7 @@ sessionRouter.get('/faillogin', (req, res) => {
 })
 
 sessionRouter.post('/login', 
-passport.authenticate('login', { failureRedirect: '/faillogin' }), 
+passport.authenticate('login', { failureRedirect: '/login', failureFlash: true }), 
 async (req, res) => {
   /*let user = await userModel.findOne({ email: req.body.email })
 

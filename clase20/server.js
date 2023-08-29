@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const FileStore = require('session-file-store')
 const MongoStore = require('connect-mongo')
+const flash = require('connect-flash')
 
 const app = express()
 
@@ -10,6 +11,8 @@ const fileStorage = FileStore(session)
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+app.use(flash())
 
 app.use(cookieParser('secretkey'))
 

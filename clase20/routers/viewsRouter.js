@@ -15,7 +15,13 @@ viewsRouter.get('/register', sessionMiddleware, (req, res) => {
 })
 
 viewsRouter.get('/login', sessionMiddleware, (req, res) => {
-  return res.render('login')
+  // console.log(req.flash('error'))
+  const error = req.flash('error')[0]
+  console.log({ error })
+  return res.render('login', { 
+    error,
+    hasError: error !== undefined
+  })
 })
 
 viewsRouter.get('/recovery-password', sessionMiddleware, (req, res) => {
