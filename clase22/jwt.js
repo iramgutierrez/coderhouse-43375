@@ -1,8 +1,16 @@
 const express = require('express')
+const cors = require('cors')
+const passport = require('passport')
+
 const { generateToken, verifyToken } = require('./utils/jwt')
+const initializePassport = require('./config/passport.config')
 
 const app = express()
 
+initializePassport()
+
+app.use(passport.initialize())
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -32,7 +40,8 @@ app.post('/register', (req, res) => {
 
   const token = generateToken({
     name: req.body.name,
-    email: req.body.email
+    email: req.body.email,
+    role: 'user'
   })
 
   users.push(newUser)
@@ -57,13 +66,14 @@ app.post('/login', (req, res) => {
 
   const token = generateToken({
     name: user.name,
-    email: user.email
+    email: user.email,
+    role: 'user'
   })
 
-  return res.json({ ...user, access_token: token })
+  return res.cookie('authTokenCookie', token, {
+    maxAge: 60*60*1000
+  }).send({ ...user, access_token: token })
 })
-
-
 
 const authMiddleware = async (req, res, next) => {
   const token = req.headers.authorization && req.headers.authorization.replace('Bearer ', '')
@@ -86,7 +96,47 @@ const authMiddleware = async (req, res, next) => {
   return next()
 }
 
-app.get('/profile', authMiddleware, (req, res) => {
+const passportCall = (strategy) => {
+  return (req, res, next) => {
+    passport.authenticate(strategy, (err, user, info) => {
+      if (err) {
+        return next(err)
+      }
+
+      if (!user) {
+        return res.status(401).json({
+          error: info.messages ? info.messages : info.toString()
+        })
+      }
+
+      req.user = user
+
+      return next()
+    })(req, res, next)
+  }
+}
+
+const authorizationMiddleware = (role) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({
+        error: 'Debes iniciar sesión'
+      })     
+    }
+
+    if (req.user.role !== role) {
+      return res.status(403).json({
+        error: 'No tienes permiso para consumir este recurso'
+      })
+    }
+
+    return next()
+  }
+}
+
+// app.get('/profile', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/profile', passportCall('jwt'), authorizationMiddleware('user'), (req, res) => {
+
   return res.json(req.user)
 })
 
