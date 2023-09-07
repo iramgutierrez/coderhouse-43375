@@ -23,17 +23,6 @@ sessionRouter.get('/', (req, res) => {
 sessionRouter.post('/register', 
   passport.authenticate('register', { failureRedirect: '/failregister' }), 
   async (req, res) => {
-    /*const body = req.body
-    body.password = createHash(body.password)
-    console.log({ body })
-    const user = await userModel.create(body)*/
-
-    /*if (req.query.client === 'view') {
-      return res.redirect('/login')
-    }*/
-
-    //return res.redirect('/login')
-
     return res.status(201).json(req.user)
   })
 

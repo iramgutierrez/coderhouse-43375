@@ -15,6 +15,8 @@ sendButton.addEventListener('click', (e) => {
   console.log({ email, password })
 
   fetch('http://localhost:8080/login', {
+  // fetch('http://localexample.com:8080/login', {
+    credentials: 'include',
     method: 'POST',
     body: JSON.stringify({
       email,
@@ -23,10 +25,15 @@ sendButton.addEventListener('click', (e) => {
     headers: {
       'Content-Type': 'application/json'
     }
-  }).then(result => result.json())
+  }).then(res => {
+    console.log(res.headers.get('Set-Cookie')); // undefined
+          console.log(document.cookie); // nope
+    return res.json()
+  })
     .then(data => {
+      
       console.log(data)
-      localStorage.setItem('authToken', data.access_token)
+      // localStorage.setItem('authToken', data.access_token)
     })
 })
 
@@ -34,11 +41,13 @@ getProfile.addEventListener('click', (e) => {
   e.preventDefault()
 
   fetch('http://localhost:8080/profile', {
-    method: 'GET',
+  // fetch('http://localexample.com:8080/profile', {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-    }
+      // 'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+    },
+    credentials: 'include',
+    method: 'GET',
   })
   .then(result => result.json())
   .then(data => console.log(data))

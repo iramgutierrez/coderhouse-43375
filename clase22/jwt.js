@@ -1,16 +1,25 @@
 const express = require('express')
 const cors = require('cors')
 const passport = require('passport')
+const cookieParser = require('cookie-parser')
 
 const { generateToken, verifyToken } = require('./utils/jwt')
 const initializePassport = require('./config/passport.config')
 
 const app = express()
+app.use(cookieParser('secretkey'))
 
 initializePassport()
 
+
+
 app.use(passport.initialize())
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:5500',
+  //origin: 'http://localexample.com:5500',
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204,
+  credentials: true
+}))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -71,8 +80,9 @@ app.post('/login', (req, res) => {
   })
 
   return res.cookie('authTokenCookie', token, {
-    maxAge: 60*60*1000
-  }).send({ ...user, access_token: token })
+    maxAge: 60*60*1000,
+    httpOnly: true
+  }).send(user)
 })
 
 const authMiddleware = async (req, res, next) => {
