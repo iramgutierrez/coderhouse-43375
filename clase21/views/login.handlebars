@@ -2,6 +2,8 @@
   <p>{{ error }}</p>
 {{/if}}
 
+{{> header }}
+
 <h3>Inicia sesión o <a href="/register">Registrate</a></h3>
 
 <form action="/api/sessions/login" method="POST">
@@ -18,3 +20,6 @@
 <h3> o inicia sesión con: </h3>
 
 <a href="/api/sessions/github">Entrar con github</a>
+
+
+{{> footer }}

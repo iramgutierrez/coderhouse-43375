@@ -9,6 +9,8 @@ class ToysController {
     console.log(this)
     const toys = this.service.getAll()
 
+    console.log(toys)
+
     return res.json(toys)
   }
  
