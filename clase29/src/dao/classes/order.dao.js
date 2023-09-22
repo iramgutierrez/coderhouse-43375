@@ -1,4 +1,4 @@
-import orderModel from "../models/order.model";
+import orderModel from "../models/order.model.js";
 
 export default class Order {
     

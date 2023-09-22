@@ -12,7 +12,7 @@ export default class User {
         }
     }
 
-    getuserById = async (id) => {
+    getUserById = async (id) => {
         try{
             let user = await userModel.findOne({_id:id});
             return user;
