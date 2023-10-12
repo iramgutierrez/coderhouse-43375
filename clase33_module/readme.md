@@ -1,0 +1,1 @@
+Este es un modulo de ejemplo. No debe ser utilizado en ambientes productivos.
