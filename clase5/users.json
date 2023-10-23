@@ -1,16 +1,14 @@
 [
   {
-    "name": "Santiago Modificado",
-    "lastname": "Ferrer Modificado",
-    "username": "santiago Modificado",
-    "password": "qwerty Modificado",
-    "id": 1
-  },
+  "name": "Santiago Modificado",
+  "lastname": "Ferrer Modificado",
+  "username": "santiago Modificado",
+  "password": "qwerty Modificado",
+  "id": 1
+},
   {
     "name": "Santiago Modificado",
-    "lastname": "Ferrer Modificado",
-    "username": "santiago Modificado",
+  "lastname": "Ferrer Modificado",
+          "username": "santiago Modificado",
     "password": "qwerty Modificado",
-    "id": 2
-  }
-]
+"id": 2}]
