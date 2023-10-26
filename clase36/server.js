@@ -13,7 +13,8 @@ const app = express()
 app.get('/', (req, res) => {
   return res.json({
     status: 'running',
-    date: new Date()
+    date: new Date(),
+    pid: process.pid
   })
 })
 
@@ -26,7 +27,7 @@ app.get('/users', (req, res) => {
 
 
 
-const PORT = 8080
+const PORT = 8081
 
 app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`))
 

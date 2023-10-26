@@ -7,9 +7,9 @@ if (cluster.isPrimary) {
   console.log('Proceso primario', process.pid)
   console.log('Este proceso solo se encargara de levantar los procesos secundarios')
 
-  //for (let i = 0; i < cpus().length; i++) {
+  for (let i = 0; i < cpus().length; i++) {
     cluster.fork()
-  //}
+  }
 
   cluster.on('message', worker => {
     `Mensaje recibido desde el worker: ${worker.process.pid}`
