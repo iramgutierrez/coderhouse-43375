@@ -1,0 +1,128 @@
+paths:
+  /api/users/:
+    get:
+      summary: Obtiene todos los usuarios
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Los usuarios fueron devueltos correctamente
+          content:
+            application/json:
+              schema:
+                type: Array
+                items:
+                  $ref: '#components/schemas/User'
+        "500":
+          description: Ocurrio un error en el servidor
+  /api/users/{uid}:
+    get:
+      summary: Obtiene un usuario por su id
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: id del usuario a buscar
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: usuario encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/User'
+    put:
+      summary: actualiza un usuario a partir de su id
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: id del usuario a buscar
+          schema:
+            $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateUser'
+      responses:
+        "200":
+          description: usuario actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/User'
+    delete:
+      summary: elimina un usuario a partir de su id
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: id del usuario a buscar
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: usuario eliminado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/User'
+        "404":
+          description: No se encontro el usuario
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado de mongo
+        first_name:
+          type: String
+          description: Nombre del usuario
+        last_name:
+          type: String
+          description: Apellido del usuario
+        email:
+          type: String
+          description: Correo electrónico del usuario
+        password:
+          type: String
+          description: Constraseña del usuario
+      example:
+        _id: ObjectId("xxxxx")
+        first_name: Iram
+        last_name: Gutierrez
+        email: iram@mail.com
+        password: xxxxxxxxxxx
+  requestBodies:
+    updateUser:
+      type: object
+      properties:
+        first_name:
+          type: String
+          description: Nombre del usuario
+        last_name:
+          type: String
+          description: Apellido del usuario
+        email:
+          type: String
+          description: Correo electrónico del usuario
+        password:
+          type: String
+          description: Constraseña del usuario
+      example:
+        first_name: Iram
+        last_name: Gutierrez
+        email: iram@mail.com
+        password: xxxxxxxxxxx
