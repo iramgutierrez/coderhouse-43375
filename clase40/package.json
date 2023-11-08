@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "test": "mocha test/*"
+    "test": "mocha test/*",
+    "supertest": "mocha test/supertest.test.js"
   },
   "keywords": [],
   "author": "",
@@ -18,11 +19,11 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.5",
-    "multer": "^1.4.5-lts.1",
-    "supertest": "^6.3.3"
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "chai": "^4.3.10",
-    "mocha": "^10.2.0"
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3"
   }
 }
