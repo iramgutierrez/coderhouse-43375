@@ -1,31 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
+import { UserRepository } from './repositories/users.repository';
 
 @Injectable()
 export class UsersService {
-  users: Array<User>;
-
-  constructor() {
-    this.users = [];
+  constructor(private readonly usersRepository: UserRepository) {
+    // this.users = [];
   }
 
-  create(createUserDto: CreateUserDto): User {
-    const user = new User();
+  create(createUserDto: CreateUserDto) {
+    /*const user = new User();
     user.id = this.users.length + 1;
     user.name = createUserDto.name;
     user.email = createUserDto.email;
 
     this.users.push(user);
-    return user;
+    return user;*/
+    return this.usersRepository.create(createUserDto);
   }
 
   findAll(limit: number) {
-    return this.users.slice(0, limit);
+    return this.usersRepository.find();
   }
 
-  findOne(id: number): User {
+  /*findOne(id: number): User {
     return this.users.find((user) => user.id === id);
   }
 
@@ -51,5 +50,5 @@ export class UsersService {
 
     this.users.splice(userIndex, 1);
     return true;
-  }
+  }*/
 }

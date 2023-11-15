@@ -2,10 +2,14 @@ import chai from 'chai'
 import supertest from 'supertest'
 
 const expect = chai.expect
-const requester = supertest('http://localhost:8080')
+let requester
 
 describe('Testing adoptme', function () {
+  before(function () {
+    requester = supertest(`http://localhost:${process.env.PORT}`)
+  })
   describe('Test de mascotas', function () {
+    
     it('el endpoint POST /api/pets debe crear una mascota', async function () {
       const pet = {
         name: 'patitas',

@@ -10,13 +10,17 @@ import {
   HttpStatus,
   Query,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config'
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private config: ConfigService,
+  ) {}
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
@@ -25,11 +29,11 @@ export class UsersController {
 
   @Get()
   findAll(@Query('limit') limit: string = '5') {
-    console.log({ limit });
+    console.log(this.config.get('MONGO_URI'));
     return this.usersService.findAll(+limit);
   }
 
-  @Get(':id')
+  /*@Get(':id')
   findOne(@Param('id') id: string) {
     if (isNaN(+id)) {
       throw new HttpException('Invalid param', HttpStatus.BAD_REQUEST);
@@ -45,5 +49,5 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
-  }
+  }*/
 }
